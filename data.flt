@@ -1,0 +1,12 @@
+# *********************
+# Float Namelist
+# *********************
+ &FLT_NML
+#FLT_Iter0    =  1,
+ flt_int_traj =  86400.,
+ flt_int_prof =  8640000.,
+#flt_int_traj =  86400.,
+#flt_int_prof =  8640000.,
+#flt_noise    = 0.1,
+ flt_file     = 'ini_pos.bin',
+ &
