@@ -3,7 +3,7 @@
 This repo provides tools to use `MITgcm/pkg/flt/` with global grids that often rely on `pkg/exch2/`. This `README.md` provides user directions plus bits of documentation.
 
 
-## 1) Repo Folder Contents
+## 1) Repo Contents
 
 - `code_flt/` contains compile time options / settings plus a few modified function files. The latter would eventually be merged into the main `MITgcm` repo.
 - `input_flt/` contains run time options / settings.
@@ -51,12 +51,12 @@ With the same preliminary steps as in `How To -- Initialize` and after having co
 addpath(genpath([pwd filesep 'tools' filesep]));
 dirRun=[pwd filesep 'run' filesep];
 [flts,data,header]=read_flt_traj([dirRun 'float_trajectories'],4);
-plot_flt_traj(flts);
+plot_flt_traj(flts(1:100:end));
 ```
 
 
 
-## initial testing stuff (`201702files/`)
+## Initial Testing (`201702files/`)
 
 
 - `pkg_flt_diff` summarizes modifications made to MITgcm/pkg/flt before compiling it
@@ -69,4 +69,4 @@ plot_flt_traj(flts);
 
 
 
-[^read_flt_traj]: The execution of `read_flt_traj` can take a long time.
+[^read_flt_traj]: The execution of `read_flt_traj` can take a few minutes.

@@ -20,67 +20,86 @@ fName = varargin{1};
 imax=13;                  % record size
 ieee='b';                 % IEEE big-endian format
 WORDLENGTH = 8;           % 8 bytes per real*8
-if length(varargin)==2
+if nargin>=2
    WORDLENGTH = varargin{2};
 end
 bytesPerRec=imax*WORDLENGTH;
 rtype =['real*',num2str(WORDLENGTH)];
-if length(varargin)==3;
+if nargin==3;
    list_flt=varargin{3};
 else;
    list_flt=[];
 end;
 
-[I]=strfind(fName,'/');
+[I]=strfind(fName,filesep);
 if length(I) == 0,
  bDr='';
 else
- fprintf(' found Dir Sep in file name (');
+ fprintf(' Found filesep in file name (at');
  fprintf(' %i',I);
  bDr=fName(1:I(end));
- fprintf(' ) ; load files from Dir "%s"\n',bDr);
+ fprintf(' ) ; will load files from: \n  "%s"\n',bDr);
 end
+
+%% Read everything
 
 fls=dir([fName,'.*data']);
 
-data=zeros(imax,0);
-header=zeros(imax,0);
+i1=[fls(:).bytes]/bytesPerRec;
+i2=cumsum(i1-1);
+i1=[1 i2(1:end-1)+1];
 
-% Read everything
+data=zeros(imax,i2(end));
+header=zeros(imax,length(fls));
+
+tic;
 for k=1:size(fls,1)
  fid=fopen([bDr,fls(k).name],'r',ieee);
-%fprintf('fid= %i\n',fid);
- nrecs=fls(k).bytes/bytesPerRec;
- ldata=fread(fid,[imax nrecs],rtype);
+ header(:,k)=fread(fid,[imax 1],rtype);
+ data(:,i1(k):i2(k))=fread(fid,[imax i2(k)-i1(k)+1],rtype);
+ tmp1=fread(fid,1,rtype); if ~feof(fid); error('incomplete read'); end;
  fclose(fid);
- header=[header ldata(:,1)];
- data=[data ldata(:,2:end)];
- clear ldata;
 end
+toc;
 
+%% Sort data according to time then float ID
+
+tic;
+[t,jj]=sort( data(2,:) ); data=data(:,jj);
+[t,jj]=sort( data(1,:) ); data=data(:,jj);
+[C,IA,IC] = unique(data(1,:));
+j1=IA; j2=[IA(2:end);size(data,1)];
+toc;
+
+%% Initialize flt
+
+tic;
 flt=struct('numsteps',[],'time',[],'x',[],'y',[],'z',[]);
 nflt=max(max(data(1,:)));
 if isempty(list_flt); list_flt=[1:nflt]; end;
 nflt=length(list_flt);
 flt=repmat(flt,[1 nflt]);
+toc;
 
-% Sort it all out
+%% Extract selected floats
+
+tic;
 for k=1:nflt;
- j=find( data(1,:)==list_flt(k) );
- [t,jj]=sort( data(2,j) ); j=j(jj);
- flt(k).time=data(2,j);
- flt(k).x=data( 3,j);
- flt(k).y=data( 4,j);
- flt(k).z=data( 5,j);
- flt(k).i=data( 6,j);
- flt(k).j=data( 7,j);
- flt(k).k=data( 8,j);
- flt(k).p=data( 9,j);
- flt(k).u=data(10,j);
- flt(k).v=data(11,j);
- flt(k).t=data(12,j);
- flt(k).s=data(13,j);
-end
+ tmp=data(:,j1(list_flt(k)):j2(list_flt(k)));
+ flt(k).time=tmp(2,:);
+ flt(k).x=tmp( 3,:);
+ flt(k).y=tmp( 4,:);
+ flt(k).z=tmp( 5,:);
+ flt(k).i=tmp( 6,:);
+ flt(k).j=tmp( 7,:);
+ flt(k).k=tmp( 8,:);
+ flt(k).p=tmp( 9,:);
+ flt(k).u=tmp(10,:);
+ flt(k).v=tmp(11,:);
+ flt(k).t=tmp(12,:);
+ flt(k).s=tmp(13,:); 
+end;
+toc;
 
 return
 
