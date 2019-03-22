@@ -3,7 +3,7 @@
 This repo provides tools to use `MITgcm/pkg/flt/` with global grids that often rely on `pkg/exch2/`. This `README.md` provides user directions plus bits of documentation.
 
 
-##1) Repo Folder Contents
+## 1) Repo Folder Contents
 
 - `code_flt/` contains compile time options / settings plus a few modified function files. The latter would eventually be merged into the main `MITgcm` repo.
 - `input_flt/` contains run time options / settings.
@@ -11,7 +11,7 @@ This repo provides tools to use `MITgcm/pkg/flt/` with global grids that often r
 - `201702files/` contains initial testing stuff from 2017/02 (see below).
 
 
-##2) How To -- Run
+## 2) How To -- Run
 
 To run the model and pkg/flt concurrently (i.e., in online mode) proceed as follows.
 
@@ -33,7 +33,7 @@ ln -s ../init_flt/* .
 
 - [Run the model](https://eccov4.readthedocs.io/en/latest/runs.html) using your favorite computer and shell script.
 
-##3) How To -- Initialize
+## 3) How To -- Initialize
 
 Add `tools/` into `MITgcm/mysetups/ECCOv4/` and download [gcmfaces](https://gcmfaces.readthedocs.io/en/latest/) into `tools/`. Download [nctiles_grid/](https://eccov4.readthedocs.io/en/latest/downloads.html) into `MITgcm/mysetups/ECCOv4/`. Open `Matlab` and go to `MITgcm/mysetups/ECCOv4/` and execute commands below.
 
@@ -42,7 +42,7 @@ addpath(genpath([pwd filesep 'tools' filesep]));
 create_init_flt;
 ```
 
-##4) How To -- Plot
+## 4) How To -- Plot
 
 With the same preliminary steps as in `How To -- Initialize` and after having completed `How To -- Run`, it's time to plot results [^read_flt_traj]. 
 
