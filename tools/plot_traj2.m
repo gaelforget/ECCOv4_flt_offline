@@ -1,8 +1,14 @@
+function []=plot_flt_traj(flts);
+% plot_flt_traj(flts) plots trajectories generated using pkg/flt
+%
+%A possible calling sequence:
+%
+%grid_load;
+%dirRun='run/';
+%[flts,data,header]=read_flt_traj([dirRun 'float_trajectories'],4);
+%plot_flt_traj(flts);
 
 gcmfaces_global;
-
-dirRun='run_eccov4r2_20170212_flt/';
-[flts,data,header]=read_flt_traj([dirRun 'float_trajectories'],4);
 
 numPlot=2
 

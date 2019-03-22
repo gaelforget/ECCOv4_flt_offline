@@ -1,3 +1,6 @@
+function []=create_init(dirOut);
+% create_init(dirOut) creates initial conditions for MITgcm/pkg/flt
+%   that will be stored into dirOut ('init_flt/' by default).
 
 %get tile map
 %skip blank tiles
@@ -6,10 +9,12 @@
 %add uniform noise to i,j (in the -0.5 to 0.5 I think)
 %output to file (single prec for ini or double for pickup)
 
+if isempty(whos('dirOut')); dirOut=[pwd filesep 'init_flt' filesep]; end;
+if ~isdir(dirOut); mkdir(dirOut); end;
+
 %%
 
-p=genpath('gcmfaces/'); addpath(p);
-grid_load; gcmfaces_global;
+gcmfaces_global; if isempty(mygrid); grid_load; end;
 map_tile=gcmfaces_loc_tile(30,30);
 
 tmp1=convert2vector(mygrid.mskC(:,:,1).*map_tile);
@@ -32,9 +37,6 @@ vec_tile=convert2vector(map_tile.*mygrid.mskC(:,:,1));
 
 kk=0;
 for ii=1:length(list_tile);
-  %filIn=sprintf('%s/pickup_flt1/pickup_flt.0000008772.%03d.001.data',pwd,ii);
-  %tmpIn=read2memory(filIn,[],64);
-  %
   jj=find(vec_tile==list_tile(ii)); 
   tmp_i=vec_i(jj); tmp_j=vec_j(jj);
   nn=length(jj);
@@ -43,7 +45,7 @@ for ii=1:length(list_tile);
   tmp2=[kk+[1:nn]' -ones(nn,1) tmp_i tmp_j ones(nn,1) zeros(nn,3) -ones(nn,1)];
   arrOut=[tmp1;tmp2]';
   %
-  filOut=sprintf('%s/init_flt4/init_flt.%03d.001.data',pwd,ii);
+  filOut=sprintf('%s/init_flt.%03d.001.data',dirOut,ii);
   write2file(filOut,arrOut,32);
   kk=kk+nn;
 end;
