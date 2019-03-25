@@ -1,0 +1,80 @@
+# Diagnostic Package Choices
+#-----------------
+# for each output-stream:
+#  filename(n) : prefix of the output file name (only 8.c long) for outp.stream n
+#  frequency(n):< 0 : write snap-shot output every multiple of |frequency| (iter)
+#               > 0 : write time-average output every multiple of frequency (iter)
+#  levels(:,n) : list of levels to write to file (Notes: declared as REAL)
+#                 when this entry is missing, select all common levels of this list
+#  fields(:,n) : list of diagnostics fields (8.c) (see "available_diagnostics" file 
+#                 for the list of all available diag. in this particular config)
+#--------------------------------------------------------------------
+#
+ &diagnostics_list
+#
+   dumpatlast = .TRUE.,
+   diagMdsDir = 'diags',
+#---
+  frequency(1) = 2635200.0,
+   fields(1:6,1) = 'ETAN    ','MXLDEPTH',
+                 'oceQnet ','oceFWflx',
+                 'oceTAUX ','oceTAUY ',
+   filename(1) = 'state_2d_set1',
+#---
+  frequency(2) = 2635200.0,
+   fields(1:3,2) = 'THETA   ','SALT    ',
+#stuff that is not quite state variables (and may not be quite
+#synchroneous) but are added here to reduce file number
+                 'DRHODR  ',
+#                'KPPviscA','KPPdiffT','KPPdiffTS',
+#                'GGL90TKE','GGL90Lmx','GGL90Prl',
+#                'GGL90ArU','GGL90ArV','GGL90Kr ',
+   filename(2) = 'state_3d_set1',
+#---
+  frequency(3) = 2635200.0,
+   fields(1:5,3) = 'UVELMASS','VVELMASS','WVELMASS',
+                 'GM_PsiX ','GM_PsiY ',
+#uvel is approximately uvelmass divided by initial hfac, so we dont output the former
+#                'UVEL    ','VVEL    ','WVEL     ',
+#full 3D temperature fluxes : 'DFxE_TH ','DFyE_TH ','DFrE_TH ','DFrI_TH ','ADVx_TH ','ADVy_TH ','ADVr_TH ',
+#but for present computations I only need the vertically integrated horizontal components (see trsp_3d_set2)
+   filename(3) = 'trsp_3d_set1',
+#---
+ &
+#
+#
+# Parameter for Diagnostics of per level statistics:
+#-----------------
+# for each output-stream:
+#  stat_fname(n) : prefix of the output file name (only 8.c long) for outp.stream n
+#  stat_freq(n):< 0 : write snap-shot output every |stat_freq| seconds
+#               > 0 : write time-average output every stat_freq seconds
+#  stat_phase(n)    : write at time = stat_phase + multiple of |stat_freq|
+#  stat_region(:,n) : list of "regions" (default: 1 region only=global)
+#  stat_fields(:,n) : list of diagnostics fields (8.c) (see "available_diagnostics.log"
+#                 file for the list of all available diag. in this particular config)
+#-----------------
+ &DIAG_STATIS_PARMS
+# diagSt_regMaskFile='basin_masks_eccollc_90x50.bin',
+# nSetRegMskFile=1,
+# set_regMask(1)= 1,  1,  1,  1,  1,  1,  1,  1,  1,
+#                 1,  1,  1,  1,  1,  1,  1,  1
+# val_regMask(1)= 1., 2., 3., 4., 5., 6., 7., 8., 9.,
+#                10.,11.,12.,13.,14.,15.,16.,17.
+##---
+# stat_fields(1,1)= 'ETAN    ','ETANSQ  ','DETADT2 ',
+#                   'UVEL    ','VVEL    ','WVEL    ',
+#                   'THETA   ','SALT    ',
+#    stat_fname(1)= 'dynStDiag',
+#     stat_freq(1)= 3153600.,
+# stat_region(1,1)=  1, 2, 3, 4, 5, 6, 7, 8, 9,
+#                   10,11,12,13,14,15,16,17
+##---
+# stat_fields(1,2)= 'oceTAUX ','oceTAUY ',
+#                   'surForcT','surForcS','TFLUX   ','SFLUX   ',
+#                   'oceQnet ','oceSflux','oceFWflx',
+#    stat_fname(2)= 'surfStDiag',
+#     stat_freq(2)= 3153600.,
+# stat_region(1,2)=  1, 2, 3, 4, 5, 6, 7, 8, 9,
+#                   10,11,12,13,14,15,16,17
+ &

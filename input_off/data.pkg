@@ -1,0 +1,16 @@
+# Packages
+ &PACKAGES
+ useEXF             = .TRUE.,
+ useCAL             = .TRUE.,
+ useGMRedi          = .TRUE.,
+ useSeaice          = .FALSE.,
+ useGGL90           = .FALSE.,
+ useSALT_PlUME      = .FALSE.,
+ useDiagnostics     = .TRUE.,
+ useAUTODIFF        = .FALSE.,
+ useECCO            = .FALSE.,
+ useCTRL            = .TRUE.,
+ useProfiles        = .FALSE.,
+ useSMOOTH          = .FALSE.,
+ useOFFLINE         = .TRUE.,
+ &

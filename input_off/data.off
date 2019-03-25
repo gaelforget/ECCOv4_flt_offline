@@ -1,0 +1,22 @@
+ &OFFLINE_PARM01
+  UvelFile= 'UVELMASS_mon.bin',
+  VvelFile= 'VVELMASS_mon.bin',
+  WvelFile= 'WVELMASS_mon.bin',
+# GMwxFile= ' ',
+# GMwyFile= ' ',
+# GMwzFile= ' ',
+# ConvFile= ' ',
+  SaltFile= 'SALT_mon.bin',
+  ThetFile= 'THETA_mon.bin',
+# SFluxFile=' ',
+# HFluxFile=' ',
+ &
+
+ &OFFLINE_PARM02
+# offlineIter0=1,
+  deltaToffline=3600.,
+  offlineForcingPeriod=2628000.,
+  offlineForcingCycle=31536000.,
+# offlineTimeOffset=1314000.,
+ &
+
