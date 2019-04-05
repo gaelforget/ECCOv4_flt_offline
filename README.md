@@ -19,15 +19,31 @@
 To run the model and pkg/flt concurrently (i.e., in online mode) proceed as follows.
 
 - [Download the setup](https://eccov4.readthedocs.io/en/latest/downloads.html)
-- add `code_flt/` and `input_flt/` into `MITgcm/mysetups/ECCOv4/`
-- [Compile the model](https://eccov4.readthedocs.io/en/latest/runs.html) but with `-mods="../code_flt ../code"`.
-- Prepare the run directory, within `MITgcm/mysetups/ECCOv4/`, using the following sequence. It is here assumed that initial conditions for `pkg/flt` are provided by the user in `init_flt/` (e.g., see **How To -- Initialize `pkg/flt`**).
+- Go to `MITgcm/mysetups/ECCOv4/` and download `code_flt/` + `input_flt/` as follows:
+
+```
+cd MITgcm/mysetups/ECCOv4/
+git clone https://github.com/gaelforget/MITgcm_flt
+```
+
+- [Compile the model](https://eccov4.readthedocs.io/en/latest/runs.html) but with `-mods="../MITgcm_flt/code_flt ../code"`. For example:
+
+```
+cd MITgcm/mysetups/ECCOv4/build
+../../../tools/genmake2 -mods="../MITgcm_flt/code_flt ../code" -optfile \
+     ../../../tools/build_options/linux_amd64_gfortran -mpi
+make depend
+make -j 4
+cd ..
+```
+
+- Prepare the run directory using the following sequence where it is assumed that `init_flt/` contains initial conditions provided by user (e.g., see **How To -- Initialize `pkg/flt`**).
 
 ```
 mkdir run
 cd run
 ln -s ../build/mitgcmuv .
-ln -s ../input_flt/* .
+ln -s ../MITgcm_flt/input_flt/* .
 ln -s ../input/* .
 ln -s ../inputs_baseline2/input*/* .
 ln -s ../forcing_baseline2 .
@@ -35,7 +51,7 @@ ln -s ../init_flt/* .
 ```
 
 - [Run the model](https://eccov4.readthedocs.io/en/latest/runs.html) using your favorite computer and shell script.
-- Plot output as needed using your favorite software (e.g., see **How To -- Initialize `pkg/flt`**).
+- Plot output as needed using your favorite software (e.g., see **How To -- Plot Trajectory Output**).
 
 ### 2.1) Notes on "How To -- Use `pkg/flt` in ECCO"
 
@@ -49,10 +65,19 @@ The included, preliminary setup will need to be modified; in particular:
 
 ### 2.2) How To -- Initialize `pkg/flt`
 
-Add `tools/` into `MITgcm/mysetups/ECCOv4/` and download [gcmfaces](https://gcmfaces.readthedocs.io/en/latest/) into `tools/`. Download [nctiles_grid/](https://eccov4.readthedocs.io/en/latest/downloads.html) into `MITgcm/mysetups/ECCOv4/`. Open `Matlab` and go to `MITgcm/mysetups/ECCOv4/` and execute commands below.
+Download [gcmfaces](https://gcmfaces.readthedocs.io/en/latest/) to use it along with `MITgcm_flt/tools/`. 
 
 ```
-addpath(genpath([pwd filesep 'tools' filesep]));
+cd MITgcm/mysetups/ECCOv4/
+git clone https://github.com/gaelforget/gcmfaces
+```
+
+Open `Matlab` and go to `MITgcm/mysetups/ECCOv4/` and execute `create_init_flt.m`.
+
+```
+cd MITgcm/mysetups/ECCOv4/
+addpath(genpath([pwd '/gcmfaces/']));
+addpath(genpath([pwd '/MITgcm_flt/tools/']));
 create_init_flt;
 ```
 
