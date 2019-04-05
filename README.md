@@ -26,7 +26,7 @@ cd MITgcm/mysetups/ECCOv4/
 git clone https://github.com/gaelforget/MITgcm_flt
 ```
 
-- [Compile the model](https://eccov4.readthedocs.io/en/latest/runs.html) but with `-mods="../MITgcm_flt/code_flt ../code"`. For example:
+- [Compile the model](https://eccov4.readthedocs.io/en/latest/runs.html) but with `-mods="../MITgcm_flt/code_flt ../code"`. If you are using gfortran for example you want to use the `linux_amd64_gfortran` option file:
 
 ```
 cd MITgcm/mysetups/ECCOv4/build
@@ -119,6 +119,35 @@ The included, preliminary setup will need to be re-evaluated; in particular:
 - maybe various diffusion terms (redi, ggl, convection, background) need to be accounted for?
 
 If variables are needed that are not available online (i.e., in [nctiles_climatology/](https://eccov4.readthedocs.io/en/latest/downloads.html)) then the full model needs to be re-ran to generate new output (see **How To -- Use `pkg/flt` In ECCO** and [pkg/diagnostics](https://mitgcm.readthedocs.io/en/latest/outp_pkgs/outp_pkgs.html)).
+
+## 4) How To -- Use `pkg/offline` + `pkg/flt` In ECCO
+
+Proceed as before but with a few modifications:
+
+- Uncomment the `#flt` line that in `code_off/packages.conf` . 
+- Add ` useFLT             = .TRUE.,` in `input_off/data.pkg` .
+- Compile with:
+
+```
+../../../tools/genmake2 -mods="../MITgcm_flt/code_off ../MITgcm_flt/code_flt ../code" \
+     -optfile ../../../tools/build_options/linux_amd64_gfortran -mpi
+```
+
+- Setup the run directory as:
+
+```
+mkdir run
+cd run
+ln -s ../build/mitgcmuv .
+ln -s ../MITgcm_flt/input_off/* .
+ln -s ../MITgcm_flt/input_flt/* .
+ln -s ../input/* .
+ln -s ../inputs_baseline2/input*/* .
+ln -s ../forcing_baseline2 .
+ln -s ../input_climatology/* .
+ln -s ../init_flt/* .
+```
+
 
 ## Appendix 1) Initial Test Material From 2017/02
 
