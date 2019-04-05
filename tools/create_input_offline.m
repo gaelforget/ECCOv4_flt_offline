@@ -6,7 +6,7 @@ if isempty(whos('dirIn')); dirIn=[pwd filesep 'nctiles_climatology' filesep]; en
 if isempty(whos('dirOut')); dirOut=[pwd filesep 'input_climatology' filesep]; end;
 if ~isdir(dirOut); mkdir(dirOut); end;
 
-p=genpath('gcmfaces/'); addpath(p);
+p=genpath([pwd '/gcmfaces/']); addpath(p);
 gcmfaces_global; if isempty(mygrid); grid_load; end;
 
 varList={'UVELMASS','VVELMASS','WVELMASS','THETA','SALT'};

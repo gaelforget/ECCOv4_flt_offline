@@ -83,11 +83,12 @@ create_init_flt;
 
 ### 2.3) How To -- Plot Trajectory Output
 
-After having completed a model run, it's time to plot and analyze results. In `Matlab` for example, one can use `tools/read_flt_traj.m` and `tools/plot_flt_traj.m` as shown below [^read_flt_traj]. 
+After having completed a model run, it's time to plot and analyze results. In `Matlab` for example, one can use `read_flt_traj.m` and `plot_flt_traj.m` as shown below [^read_flt_traj]. 
 
 
 ```
-addpath(genpath([pwd filesep 'tools' filesep]));
+cd MITgcm/mysetups/ECCOv4/
+addpath(genpath([pwd '/MITgcm_flt/tools/']));
 dirRun=[pwd filesep 'run' filesep];
 [flts,data,header]=read_flt_traj([dirRun 'float_trajectories'],4);
 plot_flt_traj(flts(1:100:end));
@@ -95,11 +96,17 @@ plot_flt_traj(flts(1:100:end));
 
 ## 3) How To -- Use `pkg/offline` In ECCO
 
-First, download the ECCO v4r2 climatology ([nctiles_climatology/](https://eccov4.readthedocs.io/en/latest/downloads.html)) and use `tools/create_input_offline.m` to generate `input_climatology/*_mon.bin`. 
+First, download ECCO v4r2's [nctiles_climatology/](https://eccov4.readthedocs.io/en/latest/downloads.html) into `MITgcm/mysetups/ECCOv4/` and use e.g. `create_input_offline.m` to generate `input_climatology/`. 
 
-Then, follow directions from **How To -- Use `pkg/flt` In ECCO** but with `code_off`, `input_off`, and `input_climatology` replacing `code_flt`, `input_flt`, and `init_flt`. 
+```
+cd MITgcm/mysetups/ECCOv4/
+addpath(genpath([pwd '/MITgcm_flt/tools/']));
+create_input_offline;
+```
 
-Doing so will compile and run `mitgcmuv` which should generate monthly output via `pkg/diagnostics`. This output can be compared with the original from `nctiles_climatology/` e.g. using `tools/check_run_offline.m`.
+Then, follow the same directions as in **How To -- Use `pkg/flt` In ECCO** but with `code_off`, `input_off`, and `input_climatology` replacing `code_flt`, `input_flt`, and `init_flt`. 
+
+Running this `mitgcmuv` should generate monthly output via `pkg/diagnostics` comparable to the original from `nctiles_climatology/` (e.g. see `tools/check_run_offline.m`).
 
 ### 3.1) Notes on "Use `pkg/offline` In ECCO"
 
