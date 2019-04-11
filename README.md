@@ -163,5 +163,35 @@ The `201702files/` folder contains:
 - `plot_traj2.m` plots the trajectories (model output) in global projection using m_map and gcmfaces
 
 
+## Appendix 2) Just in case ...
+
+In case your build option file does not handle the case of multiple `mods` directories as one would expect you can try something like this:
+
+```
+mkdir code_flt_online
+cp -p MITgcm_flt/code_flt/* code_flt_online/
+cp -p code/* code_flt_online/
+#/bin/cp: overwrite 'code_flt_online/packages.conf'? n
+
+cd build
+../../../tools/genmake2 -mods=../code_flt_online \
+     -optfile ../../../tools/build_options/linux_amd64_gfortran -mpi
+```
+
+And this for the offline+flt case:
+
+```
+mkdir code_flt_offline
+#mkdir: cannot create directory 'code_flt_offline': File exists
+cp -p MITgcm_flt/code_off/* code_flt_offline/
+cp -p MITgcm_flt/code_flt/* code_flt_offline/
+#/bin/cp: overwrite 'code_flt_offline/packages.conf'? n
+cp -p code/* code_flt_offline/
+#/bin/cp: overwrite 'code_flt_offline/packages.conf'? n
+
+cd build
+../../../tools/genmake2 -mods=../code_flt_offline \
+     -optfile ../../../tools/build_options/linux_amd64_gfortran -mpi
+```
 
 [^read_flt_traj]: The execution of `read_flt_traj` can take a few minutes.
