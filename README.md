@@ -169,29 +169,39 @@ In case your build option file does not handle the case of multiple `mods` direc
 
 ```
 mkdir code_flt_online
-cp -p MITgcm_flt/code_flt/* code_flt_online/
-cp -p code/* code_flt_online/
+cp -pi MITgcm_flt/code_flt/* code_flt_online/
+cp -pi code/* code_flt_online/
 #/bin/cp: overwrite 'code_flt_online/packages.conf'? n
+cd ..
 
-cd build
+mkdir build_flt_online
+cd build_flt_online
 ../../../tools/genmake2 -mods=../code_flt_online \
      -optfile ../../../tools/build_options/linux_amd64_gfortran -mpi
+cd ..
+
+mkdir run_flt_online
+cd run_flt_online
+ln -s ../build_flt_online/mitgcmuv .
+et cetera ...
 ```
 
 And this for the offline+flt case:
 
 ```
 mkdir code_flt_offline
-#mkdir: cannot create directory 'code_flt_offline': File exists
-cp -p MITgcm_flt/code_off/* code_flt_offline/
-cp -p MITgcm_flt/code_flt/* code_flt_offline/
+cp -pi MITgcm_flt/code_off/* code_flt_offline/
+cp -pi MITgcm_flt/code_flt/* code_flt_offline/
 #/bin/cp: overwrite 'code_flt_offline/packages.conf'? n
-cp -p code/* code_flt_offline/
+cp -pi code/* code_flt_offline/
 #/bin/cp: overwrite 'code_flt_offline/packages.conf'? n
+cd ..
 
-cd build
+mkdir build_flt_offline
+cd build_flt_offline
 ../../../tools/genmake2 -mods=../code_flt_offline \
      -optfile ../../../tools/build_options/linux_amd64_gfortran -mpi
+et cetera ...     
 ```
 
 [^read_flt_traj]: The execution of `read_flt_traj` can take a few minutes.
