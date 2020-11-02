@@ -1,6 +1,6 @@
 # MITgcm_flt
 
-**Content:** This repo provides tools to use `MITgcm/pkg/flt/` and with global grids that often rely on `pkg/exch2/`. Use of `MITgcm/pkg/offline/` is also explored. This `README.md` provides user directions plus bits of documentation. All contents should be regarded as work in progress that remains to be properly tested, vetted, and adapted before scientific use or online publication. For the time being, I therefore ask that you **please do not share this repository**.
+**Content:** This repo provides tools to use `MITgcm/pkg/flt/` and with global grids that often rely on `pkg/exch2/`. Use of `MITgcm/pkg/offline/` is also explored. This `README.md` provides user directions plus bits of documentation. All contents should be regarded as work in progress. 
 
 **Author:** `gforget@mit.edu`
 
