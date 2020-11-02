@@ -1,5 +1,7 @@
 # ECCOv4_flt_offline
 
+[![DOI](https://zenodo.org/badge/177004362.svg)](https://zenodo.org/badge/latestdoi/177004362)
+
 **Content:** This repo provides tools to use `MITgcm/pkg/flt/` and/or `MITgcm/pkg/offline/` with global grids that often rely on `pkg/exch2/` and `ECCOv4` in particular (Forget et al 2015). This `README.md` provides user directions plus bits of documentation. All contents should be regarded as work in progress. This setup served as the basis for `Rousselet et al 2020` and subsequent studies.
 
 - Campin, et al, MITgcm/MITgcm: mid 2020 version (Version checkpoint67s). Zenodo. <http://doi.org/10.5281/zenodo.3967889>
