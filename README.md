@@ -1,6 +1,6 @@
-# MITgcm_flt
+# ECCOv4_flt_offline
 
-**Content:** This repo provides tools to use `MITgcm/pkg/flt/` and with global grids that often rely on `pkg/exch2/`. Use of `MITgcm/pkg/offline/` is also explored. This `README.md` provides user directions plus bits of documentation. All contents should be regarded as work in progress. 
+**Content:** This repo provides tools to use `MITgcm/pkg/flt/` and/or `MITgcm/pkg/offline/` with global grids that often rely on `pkg/exch2/` and `ECCOv4 in particular`. This `README.md` provides user directions plus bits of documentation. All contents should be regarded as work in progress. This setup served as the basis for L. Rousselet, P. Cessi, G. Forget, Routes of the upper branch of the Atlantic Meridional Overturning Circulation according to an ocean state estimate. Geophys. Res. Lett. 47, e2020GL089137 (2020), and subsequent studies.
 
 **Author:** `gforget@mit.edu`
 
@@ -55,13 +55,10 @@ ln -s ../init_flt/* .
 
 ### 2.1) Notes on "How To -- Use `pkg/flt` in ECCO"
 
-The included, preliminary setup will need to be modified; in particular:
+The included, preliminary setup may need to be modified depending on the application; in particular:
 
 - Once all variables needed to setup `pkf/offline` have been generated using the full model then one should be able to run `pkf/flt` in offline mode (see **How To -- Use `pkg/offline` In ECCO**).
 - The preliminary `pkf/flt` setup provided here is for a simple 2D problem where particles drift at the surface using uVel, vVel, wVel. Dealing with 3D problems may require including bolus and diffusivity components or modifying the fortran code.
-- The handling of diffusion components as noise remains to be looked at. There are several terms (redi, ggl, convection, background) that may require distinct treaments. For example, the vertical component associated with redi may need to be separated from the implicit terms.
-- In the 3D case, it is not clear whether the current treatment of grid spacing factors is adequate (heterogeneity in DRF/DRC? partial cells? R*?) when converting between x,y,z coordinates and local fractional horizontal indices.
-- Current interpolation schemes may not ensure conservation, incompressibility asumptions, etc.; e.g., there may be advantages to using linear interpolation individually in each coordinate.
 
 ### 2.2) How To -- Initialize `pkg/flt`
 
@@ -110,13 +107,10 @@ Running this `mitgcmuv` should generate monthly output via `pkg/diagnostics` com
 
 ### 3.1) Notes on "Use `pkg/offline` In ECCO"
 
+The included, preliminary setup may need to be re-evaluated depending on the application; in particular:
 
-The included, preliminary setup will need to be re-evaluated; in particular:
-
-- maybe uvel, uvel, and wvel should be used in place of uvelmass, etc.?
-- maybe the divergent part of the velocity field needs to be subtracted?
-- maybe the gm component (uvelstar, etc.) needs to be added to the velocity field?
-- maybe various diffusion terms (redi, ggl, convection, background) need to be accounted for?
+- the divergent part of the velocity field may need to be subtracted
+- the gm component (uvelstar, etc.) may need to be added to the velocity field
 
 If variables are needed that are not available online (i.e., in [nctiles_climatology/](https://eccov4.readthedocs.io/en/latest/downloads.html)) then the full model needs to be re-ran to generate new output (see **How To -- Use `pkg/flt` In ECCO** and [pkg/diagnostics](https://mitgcm.readthedocs.io/en/latest/outp_pkgs/outp_pkgs.html)).
 
