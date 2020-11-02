@@ -1,6 +1,10 @@
 # ECCOv4_flt_offline
 
-**Content:** This repo provides tools to use `MITgcm/pkg/flt/` and/or `MITgcm/pkg/offline/` with global grids that often rely on `pkg/exch2/` and `ECCOv4 in particular`. This `README.md` provides user directions plus bits of documentation. All contents should be regarded as work in progress. This setup served as the basis for L. Rousselet, P. Cessi, G. Forget, Routes of the upper branch of the Atlantic Meridional Overturning Circulation according to an ocean state estimate. Geophys. Res. Lett. 47, e2020GL089137 (2020), and subsequent studies.
+**Content:** This repo provides tools to use `MITgcm/pkg/flt/` and/or `MITgcm/pkg/offline/` with global grids that often rely on `pkg/exch2/` and `ECCOv4` in particular (Forget et al 2015). This `README.md` provides user directions plus bits of documentation. All contents should be regarded as work in progress. This setup served as the basis for `Rousselet et al 2020` and subsequent studies.
+
+- Campin, et al, MITgcm/MITgcm: mid 2020 version (Version checkpoint67s). Zenodo. <http://doi.org/10.5281/zenodo.3967889>
+- Forget, et al., ECCO version 4: an integrated framework for non-linear inverse modeling and global ocean state estimation. Geosci. Model. Dev. 8, 3071–3104 (2015) <https://doi.org/10.5194/gmd-8-3071-2015>
+- Rousselet, Cessi, Forget, Routes of the upper branch of the Atlantic Meridional Overturning Circulation according to an ocean state estimate. Geophys. Res. Lett. 47, (2020) <https://doi.org/10.1029/2020GL089137>
 
 **Author:** `gforget@mit.edu`
 
